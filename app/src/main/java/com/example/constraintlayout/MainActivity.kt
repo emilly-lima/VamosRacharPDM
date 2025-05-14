@@ -8,24 +8,31 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.EditText
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
 class MainActivity : AppCompatActivity() , TextWatcher, TextToSpeech.OnInitListener {
     private lateinit var tts: TextToSpeech
     private lateinit var edtConta: EditText
+    private lateinit var edtPessoas: EditText
+    private lateinit var falarBt: FloatingActionButton
     private var ttsSucess: Boolean = false;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         edtConta = findViewById<EditText>(R.id.edtConta)
         edtConta.addTextChangedListener(this)
+        falarBt = findViewById<FloatingActionButton>(R.id.falarBt)
+
+        edtPessoas = findViewById<EditText>(R.id.edtPessoas)
+        edtPessoas.addTextChangedListener(this)
         // Initialize TTS engine
         tts = TextToSpeech(this, this)
 
     }
 
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-       Log.d("PDM24","Antes de mudar")
+        Log.d("PDM24","Antes de mudar")
 
     }
 
@@ -39,9 +46,9 @@ class MainActivity : AppCompatActivity() , TextWatcher, TextToSpeech.OnInitListe
         val valor: Double
 
         if(s.toString().length>0) {
-             valor = s.toString().toDouble()
+            valor = s.toString().toDouble()
             Log.d("PDM24", "v: " + valor)
-        //    edtConta.setText("9")
+            //    edtConta.setText("9")
         }
     }
 
@@ -51,32 +58,29 @@ class MainActivity : AppCompatActivity() , TextWatcher, TextToSpeech.OnInitListe
         }
         if(ttsSucess) {
             Log.d ("PDM23", tts.language.toString())
-            tts.speak("Oi Sumido", TextToSpeech.QUEUE_FLUSH, null, null)
+            tts.speak("oi", TextToSpeech.QUEUE_FLUSH, null, null)
         }
-
-
-
 
     }
     override fun onDestroy() {
-            // Release TTS engine resources
-            tts.stop()
-            tts.shutdown()
-            super.onDestroy()
-        }
+        // Release TTS engine resources
+        tts.stop()
+        tts.shutdown()
+        super.onDestroy()
+    }
 
     override fun onInit(status: Int) {
-            if (status == TextToSpeech.SUCCESS) {
-                // TTS engine is initialized successfully
-                tts.language = Locale.getDefault()
-                ttsSucess=true
-                Log.d("PDM23","Sucesso na Inicialização")
-            } else {
-                // TTS engine failed to initialize
-                Log.e("PDM23", "Failed to initialize TTS engine.")
-                ttsSucess=false
-            }
+        if (status == TextToSpeech.SUCCESS) {
+            // TTS engine is initialized successfully
+            tts.language = Locale.getDefault()
+            ttsSucess=true
+            Log.d("PDM23","Sucesso na Inicialização")
+        } else {
+            // TTS engine failed to initialize
+            Log.e("PDM23", "Failed to initialize TTS engine.")
+            ttsSucess=false
         }
+    }
 
 
 }
