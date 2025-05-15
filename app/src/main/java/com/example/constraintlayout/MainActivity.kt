@@ -52,11 +52,15 @@ class MainActivity : AppCompatActivity() , TextWatcher, TextToSpeech.OnInitListe
                 val conta = strConta.toDouble()
                 val pessoas = strPessoa.toInt()
 
-                if (pessoas > 0) {
+                if (pessoas > 1) {
                     val resultadoNum = (conta / pessoas).toDouble()
                     resultado.text = "R$ %.2f".format(resultadoNum)
-                } else {
-                    resultado.text = "Deve ter ao menos uma pessoa."
+                }
+                if (conta == 0.toDouble()){
+                    resultado.text = "Insira o valor!"
+                }
+                else {
+                    resultado.text = "Deve ter ao menos duas pessoas."
                 }
             } catch (e: NumberFormatException) {
                 resultado.text = "Valor inválido, digite um número."
@@ -77,19 +81,33 @@ class MainActivity : AppCompatActivity() , TextWatcher, TextToSpeech.OnInitListe
     }
 
     fun clickCompartilhar(v: View){
+        val strConta = edtConta.text.toString()
+        val strPessoa = edtPessoas.text.toString()
         val textoResultado = resultado.text.toString()
 
-        if (textoResultado.isBlank()) {
+        try {
+            val conta = strConta.toDouble()
+            val pessoas = strPessoa.toInt()
+
+            if (conta == 0.0 || pessoas == 0) {
+                return
+            }
+
+            if (textoResultado.isBlank() || textoResultado.contains("Deve ter ao menos") || textoResultado.contains("Valor inválido")) {
+                return
+            }
+
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, "Faz o pix! O valor ficou $textoResultado pra cada um.")
+                type = "text/plain"
+            }
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
+
+        } catch (e: NumberFormatException) {
             return
         }
-
-        val sendIntent: Intent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, "Faz o pix! O valor ficou " + resultado.text.toString() + " pra cada um.")
-            type = "text/plain"
-        }
-        val shareIntent = Intent.createChooser(sendIntent, null)
-        startActivity(shareIntent)
     }
 
     override fun onDestroy() {
@@ -111,7 +129,5 @@ class MainActivity : AppCompatActivity() , TextWatcher, TextToSpeech.OnInitListe
             ttsSucess=false
         }
     }
-
-
 }
 
