@@ -43,7 +43,7 @@
         android:layout_height="53dp"
         android:ems="10"
         android:hint="Insira o valor da conta"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:textColor="#B7BAB9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
