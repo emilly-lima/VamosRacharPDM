@@ -1,5 +1,6 @@
 package com.example.constraintlayout
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
@@ -8,6 +9,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.EditText
+import android.widget.TextView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
@@ -15,17 +17,18 @@ class MainActivity : AppCompatActivity() , TextWatcher, TextToSpeech.OnInitListe
     private lateinit var tts: TextToSpeech
     private lateinit var edtConta: EditText
     private lateinit var edtPessoas: EditText
-    private lateinit var falarBt: FloatingActionButton
+    private lateinit var resultado: TextView
     private var ttsSucess: Boolean = false;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         edtConta = findViewById<EditText>(R.id.edtConta)
         edtConta.addTextChangedListener(this)
-        falarBt = findViewById<FloatingActionButton>(R.id.falarBt)
 
         edtPessoas = findViewById<EditText>(R.id.edtPessoas)
         edtPessoas.addTextChangedListener(this)
+
+        resultado = findViewById<TextView>(R.id.resultado)
         // Initialize TTS engine
         tts = TextToSpeech(this, this)
 
@@ -41,14 +44,25 @@ class MainActivity : AppCompatActivity() , TextWatcher, TextToSpeech.OnInitListe
     }
 
     override fun afterTextChanged(s: Editable?) {
-        Log.d ("PDM24", "Depois de mudar")
+        val strConta = edtConta.text.toString()
+        val strPessoa = edtPessoas.text.toString()
 
-        val valor: Double
+        if (strConta.isNotEmpty() && strPessoa.isNotEmpty()) {
+            try {
+                val conta = strConta.toDouble()
+                val pessoas = strPessoa.toInt()
 
-        if(s.toString().length>0) {
-            valor = s.toString().toDouble()
-            Log.d("PDM24", "v: " + valor)
-            //    edtConta.setText("9")
+                if (pessoas > 0) {
+                    val resultadoNum = (conta / pessoas).toDouble()
+                    resultado.text = "R$ %.2f".format(resultadoNum)
+                } else {
+                    resultado.text = "Deve ter ao menos uma pessoa."
+                }
+            } catch (e: NumberFormatException) {
+                resultado.text = "Valor inválido, digite um número."
+            }
+        } else {
+            resultado.text = ""
         }
     }
 
@@ -58,10 +72,26 @@ class MainActivity : AppCompatActivity() , TextWatcher, TextToSpeech.OnInitListe
         }
         if(ttsSucess) {
             Log.d ("PDM23", tts.language.toString())
-            tts.speak("oi", TextToSpeech.QUEUE_FLUSH, null, null)
+            tts.speak("Total a pagar: " + resultado.text.toString(), TextToSpeech.QUEUE_FLUSH, null, null)
+        }
+    }
+
+    fun clickCompartilhar(v: View){
+        val textoResultado = resultado.text.toString()
+
+        if (textoResultado.isBlank()) {
+            return
         }
 
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, "Faz o pix! O valor ficou " + resultado.text.toString() + " pra cada um.")
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
     }
+
     override fun onDestroy() {
         // Release TTS engine resources
         tts.stop()

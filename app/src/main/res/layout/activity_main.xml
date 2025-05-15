@@ -32,6 +32,7 @@
         android:layout_marginBottom="68dp"
         android:clickable="true"
         android:importantForAccessibility="no"
+        android:onClick="clickCompartilhar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="?attr/actionModeShareDrawable" />
@@ -70,7 +71,20 @@
         android:id="@+id/resultado"
         android:layout_width="288dp"
         android:layout_height="56dp"
-        android:layout_marginBottom="180dp"
+        android:layout_marginBottom="164dp"
+        android:fontFamily="sans-serif-black"
+        android:textColor="#BBBFBE"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/resultado2"
+        android:layout_width="288dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="204dp"
         android:fontFamily="sans-serif-black"
         android:text="Total a Pagar: "
         android:textColor="#BBBFBE"
