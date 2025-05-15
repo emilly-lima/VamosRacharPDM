@@ -52,15 +52,11 @@ class MainActivity : AppCompatActivity() , TextWatcher, TextToSpeech.OnInitListe
                 val conta = strConta.toDouble()
                 val pessoas = strPessoa.toInt()
 
-                if (pessoas > 1) {
+                if (pessoas > 0) {
                     val resultadoNum = (conta / pessoas).toDouble()
                     resultado.text = "R$ %.2f".format(resultadoNum)
-                }
-                if (conta == 0.toDouble()){
-                    resultado.text = "Insira o valor!"
-                }
-                else {
-                    resultado.text = "Deve ter ao menos duas pessoas."
+                } else {
+                    resultado.text = "Deve ter ao menos uma pessoa."
                 }
             } catch (e: NumberFormatException) {
                 resultado.text = "Valor inválido, digite um número."
