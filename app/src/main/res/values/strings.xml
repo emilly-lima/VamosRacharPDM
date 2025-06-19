@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Vamos Rachar?</string>
+    <string name="btn_falar">Ativar fala do valor.</string>
+    <string name="btn_compartilhar">Ativar compartilhamento.</string>
 </resources>

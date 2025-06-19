@@ -9,8 +9,8 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="182dp"
-        android:layout_height="95dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="64dp"
         android:fontFamily="sans-serif-black"
         android:text="Vamos Rachar?"
@@ -33,18 +33,22 @@
         android:clickable="true"
         android:importantForAccessibility="no"
         android:onClick="clickCompartilhar"
+        android:contentDescription="@string/btn_compartilhar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="?attr/actionModeShareDrawable" />
 
     <EditText
         android:id="@+id/edtConta"
-        android:layout_width="240dp"
-        android:layout_height="53dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Insira o valor da conta"
         android:inputType="numberDecimal"
         android:textColor="#B7BAB9"
+        android:textColorHint="#B7BAB9"
+        android:backgroundTint="#B7BAB9"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -54,12 +58,15 @@
 
     <EditText
         android:id="@+id/edtPessoas"
-        android:layout_width="240dp"
-        android:layout_height="53dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Insira o nº de pessoas"
         android:inputType="number"
         android:textColor="#B7BAB9"
+        android:textColorHint="#B7BAB9"
+        android:backgroundTint="#B7BAB9"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -69,20 +76,21 @@
 
     <TextView
         android:id="@+id/resultado"
-        android:layout_width="288dp"
-        android:layout_height="79dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="160dp"
         android:fontFamily="sans-serif-black"
         android:textColor="#BBBFBE"
         android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/resultado2" />
 
     <TextView
         android:id="@+id/resultado2"
-        android:layout_width="288dp"
-        android:layout_height="56dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="236dp"
         android:fontFamily="sans-serif-black"
         android:text="Total a Pagar: "
@@ -100,6 +108,7 @@
         android:layout_marginBottom="44dp"
         android:clickable="true"
         android:onClick="clickFalar"
+        android:contentDescription="@string/btn_falar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/shareBt"
         app:layout_constraintHorizontal_bias="0.273"
